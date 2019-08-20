@@ -36,14 +36,7 @@
         $(document).ready( function () {
             $('#la-results').DataTable({
                 "searching": false,
-                "order": [[ 0, "desc" ]],
-                "columnDefs": [
-                    {
-                        "targets": [ 0 ],
-                        "visible": false,
-                        "searchable": false
-                    }
-                ]
+                "order": [[ 0, "desc" ]]
             });
         });
         </script>
@@ -186,9 +179,8 @@ if (isset($preferences)) {
     <button name="submit" type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>
+
 @if (isset($la_data))
-
-
 
 <div id="mapid"></div>
 
@@ -253,13 +245,16 @@ var zipScores = [
 </script>
 <script>$('#la-results').DataTable();</script>
 <p>
+
 <table id="la-results" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>ScoreNum</th>
-                <th>Score</th>
+                <th class="text-center">Score</th>
                 <th>Zip Code</th>
                 <th>Community</th>
+                <th class="text-center">2018 Growth</th>
+                <th class="text-center">2017 Growth</th>
+                <th class="text-center">2016 Growth</th>
             </tr>
         </thead>
         <tbody>
@@ -267,10 +262,24 @@ var zipScores = [
 
 @foreach($la_data as $zip)
             <tr>
-                <td>{{$zip->score/$max_score}}</td>
-                <td><span class="dot" style="background-color:rgb({{ 255*($zip->score/$max_score)    }},0,{{ 255*(1-($zip->score/$max_score))    }})"></span> </td>
+                <td class="text-center">
+                    <span class="dot" style="background-color:rgb({{ 255*($zip->score/$max_score)    }},0,{{ 255*(1-($zip->score/$max_score))    }})"></span><br/>
+                    {{number_format(100*$zip->score/$max_score,2)}}%
+                </td>
                 <td>{{$zip->zip}}</td>
                 <td>{{$zip->community}}</td>
+                <td class="text-center">
+                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2018/App\LaData::AVG_2018_GROWTH)    }},{{ 255*(1-($zip->growth_2018/App\LaData::AVG_2018_GROWTH) )    }})"></span><br/>
+                    {{number_format(100*$zip->growth_2018,2)}}%
+                </td>
+                <td class="text-center">
+                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2017/App\LaData::AVG_2017_GROWTH)    }},{{ 255*(1-($zip->growth_2017/App\LaData::AVG_2017_GROWTH) )    }})"></span><br/>
+                    {{number_format(100*$zip->growth_2017,2)}}%
+                </td>
+                <td class="text-center">
+                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2016/App\LaData::AVG_2016_GROWTH)    }},{{ 255*(1-($zip->growth_2016/App\LaData::AVG_2016_GROWTH) )    }})"></span><br/>
+                    {{number_format(100*$zip->growth_2016,2)}}%
+                </td>
             </tr>
 @endforeach
 
