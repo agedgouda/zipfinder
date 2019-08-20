@@ -19,9 +19,6 @@ class RecommendationController extends Controller
         $la_str = curl_exec($ch);
         curl_close($ch);
         $la_geojson = json_decode($la_str);
-
-        //$la_geojson = $list->features;
-
         $costSelect = $request->cost;
 
         $preferencesArray = $request->all();
@@ -79,7 +76,10 @@ class RecommendationController extends Controller
         $max_score = $la_data[0]->score;
 
 
-        return view('welcome', ['la_data' => $la_data, 'max_score' => $max_score, 'la_geojson' => $la_str ]);
+        return view('welcome', ['la_data' => $la_data, 'max_score' => $max_score,
+            'la_geojson' => $la_str,
+            'preferences'=> $request->all()
+        ]);
 
     }
 }

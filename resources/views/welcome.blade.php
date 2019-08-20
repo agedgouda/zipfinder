@@ -56,18 +56,28 @@
     <body>
         <div class="container">
             <h1>Find an LA Neighborhood to Live In</h1>
+<?php
 
-
+if (isset($preferences)) {
+    $testChecked = function($field) use ($preferences){
+        if (isset($preferences[$field])) {
+            return "checked";
+        }
+    };
+} else {
+    $testChecked = function() { return ""; };
+}
+?>
 <form action="/" method="POST">
     @csrf
   <div class="form-group">
     <label for="cost" class="col-4 col-form-label"><strong>Maximum Median Price</strong></label>
     <div>
       <select id="cost" name="cost" class="custom-select">
-        <option value="0"><$500k</option>
-        <option value="1">$700k</option>
-        <option value="2">$900k</option>
-        <option value="3">>$900k</option>
+        <option @if (isset($preferences) && $preferences['cost'] == 0) selected @endif value="0"><$500k</option>
+        <option @if (isset($preferences) && $preferences['cost'] == 1) selected @endif value="1">$700k</option>
+        <option @if (isset($preferences) && $preferences['cost'] == 2) selected @endif value="2">$900k</option>
+        <option @if (isset($preferences) && $preferences['cost'] == 3) selected @endif value="3">>$900k</option>
       </select>
     </div>
   </div>
@@ -75,23 +85,23 @@
     <label><strong>What do you do for fun?</strong></label>
     <div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="atm" id="fun_0" type="checkbox"class="custom-control-input" value="atm">
+        <input name="atm" id="fun_0" type="checkbox"class="custom-control-input" {{  $testChecked('atm') }} value="atm">
         <label for="fun_0" class="custom-control-label">I'll need to get cash first</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="bars_and_clubs" id="fun_1" type="checkbox" class="custom-control-input" value="bars_and_clubs">
+        <input name="bars_and_clubs" id="fun_1" type="checkbox" class="custom-control-input" {{  $testChecked('bars_and_clubs') }} value="bars_and_clubs">
         <label for="fun_1" class="custom-control-label">I like to boogie.</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="movies_and_theaters" id="fun_2" type="checkbox" class="custom-control-input" value="movies_and_theaters">
+        <input name="movies_and_theaters" id="fun_2" type="checkbox" class="custom-control-input" {{  $testChecked('movies_and_theaters') }} value="movies_and_theaters">
         <label for="fun_2" class="custom-control-label">Entertain me</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="professional_sports" id="fun_3" type="checkbox" class="custom-control-input" value="professional_sports">
+        <input name="professional_sports" id="fun_3" type="checkbox" class="custom-control-input" {{  $testChecked('professional_sports') }} value="professional_sports">
         <label for="fun_3" class="custom-control-label">I'm at the game</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="restaurants" id="fun_4" type="checkbox" class="custom-control-input" value="restaurants">
+        <input name="restaurants" id="fun_4" type="checkbox" class="custom-control-input" {{  $testChecked('restaurants') }} value="restaurants">
         <label for="fun_4" class="custom-control-label">Checking out a new place to eat</label>
       </div>
     </div>
@@ -100,15 +110,15 @@
     <label><strong>What kind of landscapes do you like to live near?</strong></label>
     <div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="parks" id="outdoor_0" type="checkbox"class="custom-control-input" value="parks">
+        <input name="parks" id="outdoor_0" type="checkbox"class="custom-control-input" {{  $testChecked('parks') }} value="parks">
         <label for="outdoor_0" class="custom-control-label">Parks</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="historic_landmark" id="outdoor_1" type="checkbox" class="custom-control-input" value="historic_landmark">
+        <input name="historic_landmark" id="outdoor_1" type="checkbox" class="custom-control-input" {{  $testChecked('historic_landmark') }} value="historic_landmark">
         <label for="outdoor_1" class="custom-control-label">Historical Landscapes</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="movies_and_theaters" id="outdoor_2" type="checkbox" class="custom-control-input" value="movies_and_theaters">
+        <input name="movies_and_theaters" id="outdoor_2" type="checkbox" class="custom-control-input" {{  $testChecked('movies_and_theaters') }} value="movies_and_theaters">
         <label for="outdoor_2" class="custom-control-label">Water</label>
       </div>
     </div>
@@ -117,15 +127,15 @@
     <label><strong>What kind of local amenities do you like?</strong></label>
     <div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="culture" id="indoor_0" type="checkbox"class="custom-control-input" value="culture">
+        <input name="culture" id="indoor_0" type="checkbox"class="custom-control-input" {{  $testChecked('culture') }} value="culture">
         <label for="indoor_0" class="custom-control-label">Museums</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="drinking" id="indoor_1" type="checkbox" class="custom-control-input" value="drinking">
+        <input name="drinking" id="indoor_1" type="checkbox" class="custom-control-input" {{  $testChecked('drinking') }} value="drinking">
         <label for="indoor_1" class="custom-control-label">Winery, Brewery, or Distillery</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="colleges_and_universities" id="indoor_2" type="checkbox" class="custom-control-input" value="colleges_and_universities">
+        <input name="colleges_and_universities" id="indoor_2" type="checkbox" class="custom-control-input" {{  $testChecked('colleges_and_universities') }} value="colleges_and_universities">
         <label for="indoor_2" class="custom-control-label">College or University</label>
       </div>
     </div>
@@ -134,23 +144,23 @@
     <label><strong>What do you like to shop for?</strong></label>
     <div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="food_and_beverage_retailer" id="retail_0" type="checkbox" class="custom-control-input" value="food_and_beverage_retailer">
+        <input name="food_and_beverage_retailer" id="retail_0" type="checkbox" {{  $testChecked('food_and_beverage_retailer') }} class="custom-control-input" value="food_and_beverage_retailer">
         <label for="retail_0" class="custom-control-label">Cooking/Kitchen Supplies</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="marijuana_dispenseries" id="retail_1" type="checkbox" class="custom-control-input" value="marijuana_dispenseries">
+        <input name="marijuana_dispenseries" id="retail_1" type="checkbox" class="custom-control-input" {{  $testChecked('marijuana_dispenseries') }} value="marijuana_dispenseries">
         <label for="retail_1" class="custom-control-label">Sativa, Indica, Hybrid, it is all good.</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="clothing_retail" id="retail_3" type="checkbox" class="custom-control-input" value="clothing_retail">
+        <input name="clothing_retail" id="retail_3" type="checkbox" class="custom-control-input" {{  $testChecked('clothing_retail') }} value="clothing_retail">
         <label for="retail_3" class="custom-control-label">Besides getting new clothes?</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="large_retail" id="retail_4" type="checkbox" class="custom-control-input" value="large_retail">
+        <input name="large_retail" id="retail_4" type="checkbox" class="custom-control-input" {{  $testChecked('large_retail') }} value="large_retail">
         <label for="retail_4" class="custom-control-label">Fun? I am buying stuff for the family</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="retail" id="retail_5" type="checkbox" class="custom-control-input" value="retail">
+        <input name="retail" id="retail_5" type="checkbox" class="custom-control-input" {{  $testChecked('retail') }} value="retail">
         <label for="retail_5" class="custom-control-label">I just need retail therapy</label>
       </div>
     </div>
@@ -159,15 +169,15 @@
     <label><strong>What sports do you like to play?</strong></label>
     <div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="outdoor_athletics" id="play_0" type="checkbox" class="custom-control-input" value="outdoor_athletics">
+        <input name="outdoor_athletics" id="play_0" type="checkbox" class="custom-control-input" {{  $testChecked('outdoor_athletics') }} value="outdoor_athletics">
         <label for="play_0" class="custom-control-label">Anything as long as it is outside</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="indoor_athletics" id="play_1" type="checkbox" class="custom-control-input" value="indoor_athletics">
+        <input name="indoor_athletics" id="play_1" type="checkbox" class="custom-control-input" {{  $testChecked('indoor_athletics') }} value="indoor_athletics">
         <label for="play_1" class="custom-control-label">Anything as long as it is inside</label>
       </div>
       <div class="custom-control custom-checkbox custom-control-inline">
-        <input name="video_games" id="play_2" type="checkbox" class="custom-control-input" value="video_games">
+        <input name="video_games" id="play_2" type="checkbox" class="custom-control-input"  {{  $testChecked('video_games') }} value="video_games">
         <label for="play_2" class="custom-control-label">E Sports are a thing, Mom</label>
       </div>
     </div>
