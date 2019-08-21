@@ -269,7 +269,7 @@ var zipScores = [
     <div class="col-sm-4">
         <div class="row">
             <div class="col-sm-7 offset-sm-3">
-                Above Average Growth
+                Above Average Change
             </div>
             <div class="col-sm-1">
                 <span class="dot" style="background-color:rgb(0,255,0)"></span>
@@ -277,7 +277,7 @@ var zipScores = [
         </div>
         <div class="row">
             <div class="col-sm-7 offset-sm-3">
-                Average Growth
+                Average Change
             </div>
             <div class="col-sm-1">
                 <span class="dot" style="background-color:rgb(0,255,255)"></span>
@@ -285,7 +285,7 @@ var zipScores = [
         </div>
         <div class="row">
             <div class="col-sm-7 offset-sm-3">
-                Below Average Growth
+                Below Average Change
             </div>
             <div class="col-sm-1">
                 <span class="dot" style="background-color:rgb(0,0,255)"></span>
@@ -293,7 +293,7 @@ var zipScores = [
         </div>
         <div class="row">
             <div class="col-sm-7 offset-sm-3">
-                Negative Growth
+                Negative Change
             </div>
             <div class="col-sm-1">
                 <span class="dot" style="background-color:rgb(0,0,0)"></span>
@@ -312,9 +312,10 @@ var zipScores = [
                 <th class="text-center">Score</th>
                 <th>Zip Code</th>
                 <th>Community</th>
-                <th class="text-center">2018 Growth</th>
-                <th class="text-center">2017 Growth</th>
-                <th class="text-center">2016 Growth</th>
+                <th class="text-center">Median Home Cost</th>
+                <th class="text-center">2018 Median Cost Change</th>
+                <th class="text-center">2017 Median Cost Change</th>
+                <th class="text-center">2016 Median Cost Change</th>
             </tr>
         </thead>
         <tbody>
@@ -328,6 +329,7 @@ var zipScores = [
                 </td>
                 <td>{{$zip->zip}}</td>
                 <td>{{$zip->community}}</td>
+                <td class="text-right">${{number_format($zip->cost_2018,2)}}</td>
                 <td class="text-center">
                     <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2018/App\LaData::AVG_2018_GROWTH)    }},{{ 255*(App\LaData::AVG_2018_GROWTH/$zip->growth_2018)    }})"></span><br/>
                     {{number_format(100*$zip->growth_2018,2)}}%
