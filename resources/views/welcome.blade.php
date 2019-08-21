@@ -180,10 +180,10 @@ if (isset($preferences)) {
   </div>
 </form>
 
+
 @if (isset($la_data))
 
 <div id="mapid"></div>
-
 <script type="text/javascript" src="js/zips.js"></script>
 
 <script>
@@ -246,6 +246,66 @@ var zipScores = [
 <script>$('#la-results').DataTable();</script>
 <p>
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-2">
+                Best Match
+            </div>
+            <div class="col-sm-1">
+                <span class="dot" style="background-color:rgb(255,0,0)"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                Worst Match
+            </div>
+            <div class="col-sm-1">
+                <span class="dot" style="background-color:rgb(0,0,255)"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-7 offset-sm-3">
+                Above Average Growth
+            </div>
+            <div class="col-sm-1">
+                <span class="dot" style="background-color:rgb(0,255,0)"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 offset-sm-3">
+                Average Growth
+            </div>
+            <div class="col-sm-1">
+                <span class="dot" style="background-color:rgb(0,255,255)"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 offset-sm-3">
+                Below Average Growth
+            </div>
+            <div class="col-sm-1">
+                <span class="dot" style="background-color:rgb(0,0,255)"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 offset-sm-3">
+                Negative Growth
+            </div>
+            <div class="col-sm-1">
+                <span class="dot" style="background-color:rgb(0,0,0)"></span>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <table id="la-results" class="display" style="width:100%">
         <thead>
             <tr>
@@ -269,15 +329,15 @@ var zipScores = [
                 <td>{{$zip->zip}}</td>
                 <td>{{$zip->community}}</td>
                 <td class="text-center">
-                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2018/App\LaData::AVG_2018_GROWTH)    }},{{ 255*(1-($zip->growth_2018/App\LaData::AVG_2018_GROWTH) )    }})"></span><br/>
+                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2018/App\LaData::AVG_2018_GROWTH)    }},{{ 255*(App\LaData::AVG_2018_GROWTH/$zip->growth_2018)    }})"></span><br/>
                     {{number_format(100*$zip->growth_2018,2)}}%
                 </td>
                 <td class="text-center">
-                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2017/App\LaData::AVG_2017_GROWTH)    }},{{ 255*(1-($zip->growth_2017/App\LaData::AVG_2017_GROWTH) )    }})"></span><br/>
+                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2017/App\LaData::AVG_2017_GROWTH)    }},{{ 255*(App\LaData::AVG_2017_GROWTH/$zip->growth_2017 )    }})"></span><br/>
                     {{number_format(100*$zip->growth_2017,2)}}%
                 </td>
                 <td class="text-center">
-                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2016/App\LaData::AVG_2016_GROWTH)    }},{{ 255*(1-($zip->growth_2016/App\LaData::AVG_2016_GROWTH) )    }})"></span><br/>
+                    <span class="dot" style="background-color:rgb( 0,{{255*($zip->growth_2016/App\LaData::AVG_2016_GROWTH)    }},{{ 255*(App\LaData::AVG_2016_GROWTH/$zip->growth_2016)    }})"></span><br/>
                     {{number_format(100*$zip->growth_2016,2)}}%
                 </td>
             </tr>
